@@ -13,7 +13,7 @@ let BLUE=null
 let stateCopyBtnHEX=true
 let stateCopyBtnRGB=false
 let sound =new Audio('./copy-sound.wav')
-
+let customColorsArray=new Array(5)
 const defaultPresetColors = [
 	'#ffcdd2',
 	'#f8bbd0',
@@ -200,7 +200,7 @@ presetColorParent.addEventListener('click', function(e){
 })
 
 saveBtn.addEventListener('click',function(){
-	displayToCustomColor(customColorParent)
+	displayToCustomColor(customColorParent,customColorsArray)
 })
 
 customColorParent.addEventListener('click', function(e){
@@ -295,7 +295,25 @@ function generateDecimel(){
 	})
   }
   
-  function displayToCustomColor(parent){
+
+  function displayToCustomColor(parent,customColorsArray){
 	let box=createBox(`#${inputHEX.value}`)
-	parent.appendChild(box)
+	customColorsArray.unshift(box)
+
+	if(customColorsArray.length>5){
+		customColorsArray=customColorsArray.slice(0,5)
+	}
+	
+	removeChildren(parent)
+	customColorsArray.forEach((element)=>{
+		parent.appendChild(element)
+	})
+  }
+
+  function removeChildren(parent){
+	let child = parent.lastElementChild; 
+	while (child) {
+		parent.removeChild(child);
+		child = parent.lastElementChild;
+	}
   }
